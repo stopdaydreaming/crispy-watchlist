@@ -63,14 +63,34 @@ app.get("/movies/:id/edit", (req, res) => {
 
 //api routes
 app.post("/api/movies", (req, res) => {
-  res.send("after creating movie");
-});
-app.put("/api/movies:id", (req, res) => {
-  res.send("after updating movie");
-});
-app.delete("/api/movies:id", (req, res) => {
-  res.send("after deleting movie");
-});
+    //   res.send(
+    //     "After creating a new movie in the database, I will return a response."
+    //   );
+    connection.query(
+      "INSERT INTO movies (movie) VALUES (?)",
+      [req.body.movie],
+      (err, result) => {
+          res.json(result);
+      }
+    );
+  });
+  
+  app.put("/api/movies/:id", (req, res) => {
+    res.send("After updating a movie by ID, I will return a response");
+  });
+  
+  app.delete("/api/movies/:id", (req, res) => {
+    const movieId = req.params.id;
+    //   res.send("After deleting amovie by ID, I will return a response.");
+    connection.query(
+      "DELETE FROM movies WHERE id = ?",
+      [movieId],
+      (err, result) => {
+        res.json(result);
+      }
+    );
+  });
+  
 
 //listen on the port
 app.listen(PORT, () => {
