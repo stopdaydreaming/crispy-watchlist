@@ -31,11 +31,20 @@ connection.connect(function(err) {
 
 //view routes
 app.get("/", (req, res) => {
+  connection.query("SELECT * FROM movies", (err, data) => {
+    if (err) throw err;
+    res.render("index", { movies: data });
+  });
+});
+
+app.get("/movies/new", (req, res) => {
   res.send("All my movies will go here.");
 });
 
 app.get("/movies/:id", (req, res) => {
-  res.send("A single movie will go here.");
+//   res.send("A single movie will go here.");
+  const movieId = req.params.id;
+  connection.query("SELECT * FROM movies")
 });
 
 app.get("/movies/:id/edit", (req, res) => {
@@ -48,13 +57,13 @@ app.get("/movies/new", (req, res) => {
 
 //api routes
 app.post("/api/movies", (req, res) => {
-    res.send("after creating movie")
+  res.send("after creating movie");
 });
 app.put("/api/movies:id", (req, res) => {
-    res.send("after updating movie")
+  res.send("after updating movie");
 });
 app.delete("/api/movies:id", (req, res) => {
-    res.send("after deleting movie")
+  res.send("after deleting movie");
 });
 
 //listen on the port
