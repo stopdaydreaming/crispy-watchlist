@@ -18,7 +18,7 @@ const connection = mysql.createConnection({
   port: 3306,
   user: "root",
   password: "HotTo$$y",
-  database: "moviePlanner_db"
+  database: "moviePlannerDB"
 });
 
 connection.connect(function(err) {
@@ -47,9 +47,15 @@ app.get("/movies/new", (req, res) => {
 });
 
 //api routes
-// app.put("/api/movies:id", (req, res) => {
-//     res.send("")
-// })
+app.post("/api/movies", (req, res) => {
+    res.send("after creating movie")
+});
+app.put("/api/movies:id", (req, res) => {
+    res.send("after updating movie")
+});
+app.delete("/api/movies:id", (req, res) => {
+    res.send("after deleting movie")
+});
 
 //listen on the port
 app.listen(PORT, () => {
