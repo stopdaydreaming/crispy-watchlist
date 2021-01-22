@@ -31,28 +31,34 @@ connection.connect(function(err) {
 
 //view routes
 app.get("/", (req, res) => {
+  //   res.send("All my movies will go here.");
   connection.query("SELECT * FROM movies", (err, data) => {
     if (err) throw err;
+    console.log(data);
     res.render("index", { movies: data });
   });
 });
 
 app.get("/movies/new", (req, res) => {
-  res.send("All my movies will go here.");
+  res.send("A form to create a new movie will go here.");
 });
 
 app.get("/movies/:id", (req, res) => {
-//   res.send("A single movie will go here.");
+  //   res.send("A single movie will go here.");
   const movieId = req.params.id;
-  connection.query("SELECT * FROM movies")
+
+  connection.query(
+    "SELECT * FROM movies WHERE id = ?",
+    [movieId],
+    (err, data) => {
+      // console.log(data);
+      res.render("single-movie", data[0]);
+    }
+  );
 });
 
 app.get("/movies/:id/edit", (req, res) => {
   res.send("A form to update the movie will go here.");
-});
-
-app.get("/movies/new", (req, res) => {
-  res.send("A form to create a new movie will go here.");
 });
 
 //api routes
